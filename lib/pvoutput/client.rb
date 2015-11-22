@@ -7,8 +7,8 @@ module PVOutput
     # debug_output $stdout
 
     def initialize(system_id, api_key)
-      @system_id = system_id
-      @api_key = api_key
+      @system_id = system_id.to_s
+      @api_key = api_key.to_s
 
       self.class.headers 'X-Pvoutput-Apikey' => @api_key, 'X-Pvoutput-SystemId' => @system_id
     end
