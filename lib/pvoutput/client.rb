@@ -26,7 +26,7 @@ module PVOutput
       params[:v2] = options[:power_generated] if options[:power_generated]
       params[:v3] = options[:energy_consumed] if options[:energy_consumed]
       params[:v4] = options[:power_consumed] if options[:power_consumed]
-      params[:v5] = options[:temperature] if options[:temparature]
+      params[:v5] = options[:temperature] if options[:temperature]
       params[:v6] = options[:voltage] if options[:voltage]
       params[:c1] = 1 if options[:cumulative] == true
       params[:n]  = 1 if options[:net] == true
