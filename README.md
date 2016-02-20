@@ -45,25 +45,27 @@ pvoutput.add_status(
 
 The add_status operation accepts the following options
 
-  | Option | PVOutput Parameter |
-  | ------ | ---- |
-  | energy_generated |v1 |
-  | power_generated | v2 |
-  | energy_consumed | v3 |
-  | power_consumed | v4 |
-  | temperature | v5 |
-  | voltage | v6 |
-  | cumulative | c1 |
-  | net | n |
+| Option           | PVOutput Parameter |
+| ---------------- | ------------------ |
+| energy_generated |v1 |
+| power_generated  | v2 |
+| energy_consumed  | v3 |
+| power_consumed   | v4 |
+| temperature      | v5 |
+| voltage          | v6 |
+| cumulative       | c1 |
+| net              | n |
 
 As example
 
-  client.add_status(
-    :energy_generated => 100,
-    :power_generated  => 50,
-    :temperature      => 30,
-    :voltage          => 200,
-  )
+```ruby
+client.add_status(
+  :energy_generated => 100,
+  :power_generated  => 50,
+  :temperature      => 30,
+  :voltage          => 200,
+)
+```
 
 ## Development
 
