@@ -25,17 +25,20 @@ Or install it yourself as:
 
 In order to use pvoutput in your application you need to use
 
-  require 'pvoutput/client'
+```ruby
+require 'pvoutput/client'
 
 First step is to create a PVOutput client using your PVOutput assigned system_id and api_key
 
-  pvoutput = PVOutput::Client.new(system_id, api_key)
+```ruby
+pvoutput = PVOutput::Client.new(system_id, api_key)
 
 Now you can report your status to PVOutput using
 
-  pvoutput.add_status(
-    options
-  )
+```ruby
+pvoutput.add_status(
+  options
+)
 
 The add_status operation accepts the following options
 
