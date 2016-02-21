@@ -39,13 +39,10 @@ module PVOutput
 
     # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
     def add_output(options)
-      time = options[:when] || Time.now
-
       params = {
-        'd' => time.strftime('%Y%m%d'),
       }
 
-      params[:d] = options[:output_date] if options[:output_date]
+      params[:d] = options[:output_date]
       params[:g] = options[:energy_generated] if options[:energy_generated]
       params[:pp] = options[:peak_power] if options[:peak_power]
       params[:pt] = options[:peak_time] if options[:peak_time]
