@@ -36,5 +36,28 @@ module PVOutput
       fail('Bad Post') unless response.code == 200
     end
     # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
+
+    # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
+    def add_output(options)
+      time = options[:when] || Time.now
+
+      params = {
+        'd' => time.strftime('%Y%m%d'),
+      }
+
+      params[:d] = options[:output_date] if options[:output_date]
+      params[:g] = options[:energy_generated] if options[:energy_generated]
+      params[:pp] = options[:peak_power] if options[:peak_power]
+      params[:pt] = options[:peak_time] if options[:peak_time]
+      params[:cd] = options[:condition] if options[:condition]
+      params[:tm] = options[:min_temp] if options[:min_temp]
+      params[:tx] = options[:max_temp] if options[:max_temp]
+      params[:cm] = options[:comments] if options[:comments]
+
+      response = self.class.post('/service/r2/addoutput.jsp', :body => params)
+
+      fail('Bad Post') unless response.code == 200
+    end
+    # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
   end
 end
