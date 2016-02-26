@@ -32,7 +32,7 @@ describe PVOutput::Client do
         :energy_generated => 100,
         :power_generated  => 50,
         :temperature      => 30,
-        :voltage          => 200,
+        :voltage          => 200
       )
 
       expect(st).to have_been_requested
@@ -51,7 +51,7 @@ describe PVOutput::Client do
         :energy_generated => 100,
         :peak_power       => 50,
         :max_temp         => 45,
-        :comments         => 'moo',
+        :comments         => 'moo'
       )
 
       expect(st).to have_been_requested

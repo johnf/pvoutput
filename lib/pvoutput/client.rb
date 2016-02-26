@@ -33,7 +33,7 @@ module PVOutput
 
       response = self.class.post('/service/r2/addstatus.jsp', :body => params)
 
-      fail('Bad Post') unless response.code == 200
+      raise('Bad Post') unless response.code == 200
     end
     # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
 
@@ -53,7 +53,7 @@ module PVOutput
 
       response = self.class.post('/service/r2/addoutput.jsp', :body => params)
 
-      fail('Bad Post') unless response.code == 200
+      raise('Bad Post') unless response.code == 200
     end
     # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
   end
