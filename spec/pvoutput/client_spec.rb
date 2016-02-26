@@ -21,7 +21,7 @@ describe PVOutput::Client do
     end
 
     it 'adds a status' do
-      body = 'd=20150101&t=00%3A00&v1=100&v2=50&v6=200'
+      body = 'd=20150101&t=00%3A00&v1=100&v2=50&v5=30&v6=200'
       headers = {
         'X-Pvoutput-Apikey'   => 'secret',
         'X-Pvoutput-Systemid' => '1234',
