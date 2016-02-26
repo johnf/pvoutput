@@ -23,7 +23,49 @@ Or install it yourself as:
 
 ## Usage
 
-TODO
+In order to use pvoutput in your application you need to use
+
+```ruby
+require 'pvoutput/client'
+```
+
+First step is to create a PVOutput client using your PVOutput assigned system_id and api_key
+
+```ruby
+pvoutput = PVOutput::Client.new(system_id, api_key)
+```
+
+Now you can report your status to PVOutput using
+
+```ruby
+pvoutput.add_status(
+  options
+)
+```
+
+The add_status operation accepts the following options
+
+| Option           | PVOutput Parameter |
+| ---------------- | ------------------ |
+| energy_generated |v1 |
+| power_generated  | v2 |
+| energy_consumed  | v3 |
+| power_consumed   | v4 |
+| temperature      | v5 |
+| voltage          | v6 |
+| cumulative       | c1 |
+| net              | n |
+
+As example
+
+```ruby
+client.add_status(
+  :energy_generated => 100,
+  :power_generated  => 50,
+  :temperature      => 30,
+  :voltage          => 200,
+)
+```
 
 ## Development
 
@@ -33,7 +75,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/johnf/pvoutput. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/johnf/pvoutput. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 
 ## License
