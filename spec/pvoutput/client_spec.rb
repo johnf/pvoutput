@@ -37,6 +37,25 @@ describe PVOutput::Client do
 
       expect(st).to have_been_requested
     end
+
+    it 'adds an output' do
+      body = 'd=2015-01-01&g=100&pp=50&tx=45&cm=moo'
+      headers = {
+        'X-Pvoutput-Apikey'   => 'secret',
+        'X-Pvoutput-Systemid' => '1234',
+      }
+      st = stub_request(:post, 'http://pvoutput.org/service/r2/addoutput.jsp').with(:body => body, :headers => headers)
+
+      client.add_output(
+        :output_date      => Date.today,
+        :energy_generated => 100,
+        :peak_power       => 50,
+        :max_temp         => 45,
+        :comments         => 'moo',
+      )
+
+      expect(st).to have_been_requested
+    end
   end
 end
 # rubocop:enable RSpec/FilePath
