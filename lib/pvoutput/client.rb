@@ -98,7 +98,7 @@ module PVOutput
         data.concat ','
         data.concat values[:import_shoulder].to_s if values[:import_shoulder]
         data.concat ';'
-        count += 1;
+        count += 1
 
         if count == options.size || count.remainder(@batch_size) == 0
           params[:data] = data.chop
@@ -110,7 +110,6 @@ module PVOutput
           data.clear
         end
       end
-
     end
     # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
   end
