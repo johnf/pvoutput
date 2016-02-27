@@ -66,6 +66,7 @@ module PVOutput
     # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
 
     # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
+    # rubocop:disable Style/Next
     def add_batch_output(options)
       params = {
       }
@@ -100,7 +101,7 @@ module PVOutput
         data.concat ';'
         count += 1
 
-        if count == options.size || count.remainder(@batch_size) == 0
+        if count.remainder(@batch_size) == 0 || count == options.size
           params[:data] = data.chop
 
           response = self.class.post('/service/r2/addbatchoutput.jsp', :body => params)
@@ -112,5 +113,6 @@ module PVOutput
       end
     end
     # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
+    # rubocop:enable Style/Next
   end
 end
