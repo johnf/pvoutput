@@ -9,6 +9,9 @@ module PVOutput
     def initialize(system_id, api_key)
       @system_id = system_id.to_s
       @api_key = api_key.to_s
+      # The batch operations have default limit of 30 sets of data in one request, when you
+      # are using the donation mode the limit is 100 sets
+      @batch_size = 30
 
       self.class.headers 'X-Pvoutput-Apikey' => @api_key, 'X-Pvoutput-SystemId' => @system_id
     end
@@ -67,6 +70,7 @@ module PVOutput
       params = {
       }
       data = ''
+      count = 0
 
       options.each do |date, values|
         data.concat "#{date},"
@@ -94,13 +98,19 @@ module PVOutput
         data.concat ','
         data.concat values[:import_shoulder].to_s if values[:import_shoulder]
         data.concat ';'
+        count += 1;
+
+        if count == options.size || count.remainder(@batch_size) == 0
+          params[:data] = data.chop
+
+          response = self.class.post('/service/r2/addbatchoutput.jsp', :body => params)
+
+          raise('Bad Post') unless response.code == 200
+
+          data.clear
+        end
       end
 
-      params[:data] = data.chop
-
-      response = self.class.post('/service/r2/addbatchoutput.jsp', :body => params)
-
-      raise('Bad Post') unless response.code == 200
     end
     # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
   end
