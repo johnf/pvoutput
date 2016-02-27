@@ -70,30 +70,30 @@ module PVOutput
 
       options.each do |date, values|
         data.concat "#{date},"
-        data.concat "#{values[:energy_generated]}"
-        data.concat ","
-        data.concat "#{values[:energy_export]}" if values[:energy_export]
-        data.concat ","
-        data.concat "#{values[:energy_used]}" if values[:energy_used]
-        data.concat ","
-        data.concat "#{values[:peak_power]}" if values[:peak_power]
-        data.concat ","
-        data.concat "#{values[:peak_time]}" if values[:peak_time]
-        data.concat ","
-        data.concat "#{values[:condition]}" if values[:condition]
-        data.concat ","
-        data.concat "#{values[:min_temp]}" if values[:min_temp]
-        data.concat ","
-        data.concat "#{values[:max_temp]}" if values[:max_temp]
-        data.concat ","
-        data.concat "#{values[:comments]}" if values[:comments]
-        data.concat ","
-        data.concat "#{values[:import_peak]}" if values[:import_peak]
-        data.concat ","
-        data.concat "#{values[:import_off_peak]}" if values[:import_off_peak]
-        data.concat ","
-        data.concat "#{values[:import_shoulder]}" if values[:import_shoulder]
-        data.concat ";"
+        data.concat values[:energy_generated].to_s
+        data.concat ','
+        data.concat values[:energy_export].to_s if values[:energy_export]
+        data.concat ','
+        data.concat values[:energy_used].to_s if values[:energy_used]
+        data.concat ','
+        data.concat values[:peak_power].to_s if values[:peak_power]
+        data.concat ','
+        data.concat values[:peak_time].to_s if values[:peak_time]
+        data.concat ','
+        data.concat values[:condition].to_s if values[:condition]
+        data.concat ','
+        data.concat values[:min_temp].to_s if values[:min_temp]
+        data.concat ','
+        data.concat values[:max_temp].to_s if values[:max_temp]
+        data.concat ','
+        data.concat values[:comments].to_s if values[:comments]
+        data.concat ','
+        data.concat values[:import_peak].to_s if values[:import_peak]
+        data.concat ','
+        data.concat values[:import_off_peak].to_s if values[:import_off_peak]
+        data.concat ','
+        data.concat values[:import_shoulder].to_s if values[:import_shoulder]
+        data.concat ';'
       end
 
       params[:data] = data.chop
