@@ -35,7 +35,7 @@ First step is to create a PVOutput client using your PVOutput assigned system_id
 pvoutput = PVOutput::Client.new(system_id, api_key)
 ```
 
-Now you can report your status to PVOutput using
+Now you can report your real time status to PVOutput using
 
 ```ruby
 pvoutput.add_status(
@@ -47,7 +47,7 @@ The add_status operation accepts the following options
 
 | Option           | PVOutput Parameter |
 | ---------------- | ------------------ |
-| energy_generated |v1 |
+| energy_generated | v1 |
 | power_generated  | v2 |
 | energy_consumed  | v3 |
 | power_consumed   | v4 |
@@ -62,6 +62,38 @@ As example
 client.add_status(
   :energy_generated => 100,
   :power_generated  => 50,
+  :temperature      => 30,
+  :voltage          => 200,
+)
+```
+
+Now you can report your daily output to PVOutput using
+
+```ruby
+pvoutput.add_output(
+  options
+)
+```
+
+The add_output operation accepts the following options
+
+| Option           | PVOutput Parameter |
+| ---------------- | ------------------ |
+| output_date      | d |
+| energy_generated | g |
+| peak_power       | pp |
+| peak_time        | pt |
+| condition        | cd |
+| min_temp         | tm |
+| max_temp         | tx |
+| comments         | cm |
+
+As example
+
+```ruby
+client.add_output(
+  :output_date      => '20160228'
+  :power_generated  => 15000,
   :temperature      => 30,
   :voltage          => 200,
 )
