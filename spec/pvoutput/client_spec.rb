@@ -66,7 +66,7 @@ describe PVOutput::Client do
       st = stub_request(:post, 'http://pvoutput.org/service/r2/addbatchoutput.jsp').with(:body => body, :headers => headers)
 
       client.add_batch_output(
-        options = {
+        {
           :'20150101' => {
             :energy_generated => 1239, },
           :'20150102' => {

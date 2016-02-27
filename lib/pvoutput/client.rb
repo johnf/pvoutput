@@ -103,5 +103,5 @@ module PVOutput
       raise('Bad Post') unless response.code == 200
     end
     # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
-end
+  end
 end
