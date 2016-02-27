@@ -67,11 +67,11 @@ describe PVOutput::Client do
 
       client.add_batch_output(
         :'20150101' => {
-          :energy_generated => 1239, },
+          :energy_generated => 1239 },
         :'20150102' => {
           :energy_generated => 1523 },
         :'20150103' => {
-          :energy_generated => 2190 },
+          :energy_generated => 2190 }
       )
 
       expect(st).to have_been_requested
