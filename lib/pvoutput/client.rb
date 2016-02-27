@@ -50,11 +50,58 @@ module PVOutput
       params[:tm] = options[:min_temp] if options[:min_temp]
       params[:tx] = options[:max_temp] if options[:max_temp]
       params[:cm] = options[:comments] if options[:comments]
+      params[:ip] = options[:import_peak] if options[:import_peak]
+      params[:io] = options[:import_off_peak] if options[:import_off_peak]
+      params[:is] = options[:import_shoulder] if options[:import_shoulder]
+      params[:ih] = options[:import_high_shoulder] if options[:import_high_shoulder]
+      params[:c] = options[:consumption] if options[:consumption]
 
       response = self.class.post('/service/r2/addoutput.jsp', :body => params)
 
       raise('Bad Post') unless response.code == 200
     end
     # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
-  end
+
+      # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
+    def add_batch_output(options)
+      params = {
+      }
+      data = ''
+
+      options.each do |date, values|
+        data.concat "#{date},"
+        data.concat "#{values[:energy_generated]}"
+        data.concat ","
+        data.concat "#{values[:energy_export]}" if values[:energy_export]
+        data.concat ","
+        data.concat "#{values[:energy_used]}" if values[:energy_used]
+        data.concat ","
+        data.concat "#{values[:peak_power]}" if values[:peak_power]
+        data.concat ","
+        data.concat "#{values[:peak_time]}" if values[:peak_time]
+        data.concat ","
+        data.concat "#{values[:condition]}" if values[:condition]
+        data.concat ","
+        data.concat "#{values[:min_temp]}" if values[:min_temp]
+        data.concat ","
+        data.concat "#{values[:max_temp]}" if values[:max_temp]
+        data.concat ","
+        data.concat "#{values[:comments]}" if values[:comments]
+        data.concat ","
+        data.concat "#{values[:import_peak]}" if values[:import_peak]
+        data.concat ","
+        data.concat "#{values[:import_off_peak]}" if values[:import_off_peak]
+        data.concat ","
+        data.concat "#{values[:import_shoulder]}" if values[:import_shoulder]
+        data.concat ";"
+      end
+
+      params[:data] = data.chop
+
+      response = self.class.post('/service/r2/addbatchoutput.jsp', :body => params)
+
+      raise('Bad Post') unless response.code == 200
+    end
+    # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
+end
 end

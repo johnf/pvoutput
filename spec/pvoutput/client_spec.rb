@@ -56,6 +56,28 @@ describe PVOutput::Client do
 
       expect(st).to have_been_requested
     end
+
+    it 'adds a batch output output' do
+      body = 'data=20150101%2C1239%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%3B20150102%2C1523%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%3B20150103%2C2190%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C'
+      headers = {
+        'X-Pvoutput-Apikey'   => 'secret',
+        'X-Pvoutput-Systemid' => '1234',
+      }
+      st = stub_request(:post, 'http://pvoutput.org/service/r2/addbatchoutput.jsp').with(:body => body, :headers => headers)
+
+      client.add_batch_output(
+        options = {
+          :'20150101' => {
+            :energy_generated => 1239, },
+          :'20150102' => {
+            :energy_generated => 1523 },
+          :'20150103' => {
+            :energy_generated => 2190 },
+        }
+      )
+
+      expect(st).to have_been_requested
+    end
   end
 end
 # rubocop:enable RSpec/FilePath
