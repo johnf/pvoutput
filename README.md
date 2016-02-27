@@ -103,7 +103,7 @@ client.add_output(
 )
 ```
 
-You can report your also a batch of daily output to PVOutput using
+You can report also a batch of daily output values to PVOutput using
 
 ```ruby
 pvoutput.add_batch_output(
