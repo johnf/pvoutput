@@ -93,9 +93,8 @@ As example
 ```ruby
 client.add_output(
   :output_date      => '20160228'
-  :power_generated  => 15000,
-  :temperature      => 30,
-  :voltage          => 200,
+  :energy_generated  => 15000,
+  :max_temp      => 30
 )
 ```
 
