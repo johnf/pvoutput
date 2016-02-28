@@ -65,8 +65,7 @@ module PVOutput
     end
     # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
 
-    # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
-    # rubocop:disable Style/Next
+    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     def add_batch_output(options)
       params = {
       }
@@ -74,45 +73,26 @@ module PVOutput
       count = 0
 
       options.each do |date, values|
-        data.concat "#{date},"
-        data.concat values[:energy_generated].to_s
-        data.concat ','
-        data.concat values[:energy_export].to_s if values[:energy_export]
-        data.concat ','
-        data.concat values[:energy_used].to_s if values[:energy_used]
-        data.concat ','
-        data.concat values[:peak_power].to_s if values[:peak_power]
-        data.concat ','
-        data.concat values[:peak_time].to_s if values[:peak_time]
-        data.concat ','
-        data.concat values[:condition].to_s if values[:condition]
-        data.concat ','
-        data.concat values[:min_temp].to_s if values[:min_temp]
-        data.concat ','
-        data.concat values[:max_temp].to_s if values[:max_temp]
-        data.concat ','
-        data.concat values[:comments].to_s if values[:comments]
-        data.concat ','
-        data.concat values[:import_peak].to_s if values[:import_peak]
-        data.concat ','
-        data.concat values[:import_off_peak].to_s if values[:import_off_peak]
-        data.concat ','
-        data.concat values[:import_shoulder].to_s if values[:import_shoulder]
-        data.concat ';'
+        keys = %i(energy_generated energy_export energy_used)
+        keys += %i(peak_power peak_time condition min_temp)
+        keys += %i(max_temp comments import_peak import_off_peak)
+        keys += %i(import_shoulder)
+
+        data += "#{date}," + keys.map { |key| values[key] }.join(',') + ';'
+
         count += 1
 
-        if count.remainder(@batch_size) == 0 || count == options.size
-          params[:data] = data.chop
+        next unless count.remainder(@batch_size) == 0 || count == options.size
 
-          response = self.class.post('/service/r2/addbatchoutput.jsp', :body => params)
+        params[:data] = data.chop
 
-          raise('Bad Post') unless response.code == 200
+        response = self.class.post('/service/r2/addbatchoutput.jsp', :body => params)
 
-          data.clear
-        end
+        raise('Bad Post') unless response.code == 200
+
+        data.clear
       end
     end
-    # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
-    # rubocop:enable Style/Next
+    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
   end
 end
