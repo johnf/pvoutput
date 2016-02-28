@@ -35,6 +35,12 @@ First step is to create a PVOutput client using your PVOutput assigned system_id
 pvoutput = PVOutput::Client.new(system_id, api_key)
 ```
 
+At the moment you [donate](http://pvoutput.org/donate.jsp) to PVOutput you can enable the donation mode by creating a PVOutput client using
+
+```ruby
+pvoutput = PVOutput::Client.new(system_id, api_key, true)
+```
+
 Now you can report your real time status to PVOutput using
 
 ```ruby

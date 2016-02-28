@@ -6,12 +6,13 @@ module PVOutput
     base_uri 'pvoutput.org'
     # debug_output $stdout
 
-    def initialize(system_id, api_key)
+    def initialize(system_id, api_key, donation_mode = false)
       @system_id = system_id.to_s
       @api_key = api_key.to_s
       # The batch operations have default limit of 30 sets of data in one request, when you
       # are using the donation mode the limit is 100 sets
       @batch_size = 30
+      @batch_size = 100 if donation_mode == true
 
       self.class.headers 'X-Pvoutput-Apikey' => @api_key, 'X-Pvoutput-SystemId' => @system_id
     end
