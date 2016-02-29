@@ -12,6 +12,9 @@ Style/Lambda:
 Style/TrailingCommaInLiteral:
   EnforcedStyleForMultiline: comma
 
+Metrics/MethodLength:
+  Max: 20
+
 Metrics/LineLength:
   Max: 120
 
