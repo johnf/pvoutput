@@ -6,9 +6,13 @@ module PVOutput
     base_uri 'pvoutput.org'
     # debug_output $stdout
 
-    def initialize(system_id, api_key)
+    def initialize(system_id, api_key, donation_mode = false)
       @system_id = system_id.to_s
       @api_key = api_key.to_s
+      # The batch operations have default limit of 30 sets of data in one request, when you
+      # are using the donation mode the limit is 100 sets
+      @batch_size = 30
+      @batch_size = 100 if donation_mode == true
 
       self.class.headers 'X-Pvoutput-Apikey' => @api_key, 'X-Pvoutput-SystemId' => @system_id
     end
@@ -50,11 +54,46 @@ module PVOutput
       params[:tm] = options[:min_temp] if options[:min_temp]
       params[:tx] = options[:max_temp] if options[:max_temp]
       params[:cm] = options[:comments] if options[:comments]
+      params[:ip] = options[:import_peak] if options[:import_peak]
+      params[:io] = options[:import_off_peak] if options[:import_off_peak]
+      params[:is] = options[:import_shoulder] if options[:import_shoulder]
+      params[:ih] = options[:import_high_shoulder] if options[:import_high_shoulder]
+      params[:c] = options[:consumption] if options[:consumption]
 
       response = self.class.post('/service/r2/addoutput.jsp', :body => params)
 
       raise('Bad Post') unless response.code == 200
     end
     # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
+
+    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    def add_batch_output(options)
+      params = {
+      }
+      data = ''
+      count = 0
+
+      options.each do |date, values|
+        keys = %i(energy_generated energy_export energy_used)
+        keys += %i(peak_power peak_time condition min_temp)
+        keys += %i(max_temp comments import_peak import_off_peak)
+        keys += %i(import_shoulder)
+
+        data += "#{date}," + keys.map { |key| values[key] }.join(',') + ';'
+
+        count += 1
+
+        next unless count.remainder(@batch_size) == 0 || count == options.size
+
+        params[:data] = data.chop
+
+        response = self.class.post('/service/r2/addbatchoutput.jsp', :body => params)
+
+        raise('Bad Post') unless response.code == 200
+
+        data.clear
+      end
+    end
+    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
   end
 end

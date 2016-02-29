@@ -35,6 +35,12 @@ First step is to create a PVOutput client using your PVOutput assigned system_id
 pvoutput = PVOutput::Client.new(system_id, api_key)
 ```
 
+At the moment you [donate](http://pvoutput.org/donate.jsp) to PVOutput you can enable the donation mode by creating a PVOutput client using
+
+```ruby
+pvoutput = PVOutput::Client.new(system_id, api_key, true)
+```
+
 Now you can report your real time status to PVOutput using
 
 ```ruby
@@ -67,7 +73,7 @@ client.add_status(
 )
 ```
 
-Now you can report your daily output to PVOutput using
+You can report your daily output to PVOutput using
 
 ```ruby
 pvoutput.add_output(
@@ -77,25 +83,67 @@ pvoutput.add_output(
 
 The add_output operation accepts the following options
 
-| Option           | PVOutput Parameter |
-| ---------------- | ------------------ |
-| output_date      | d |
-| energy_generated | g |
-| peak_power       | pp |
-| peak_time        | pt |
-| condition        | cd |
-| min_temp         | tm |
-| max_temp         | tx |
-| comments         | cm |
+| Option                | PVOutput Parameter |
+| --------------------- | ------------------ |
+| output_date           | d |
+| energy_generated      | g |
+| peak_power            | pp |
+| peak_time             | pt |
+| condition             | cd |
+| min_temp              | tm |
+| max_temp              | tx |
+| comments              | cm |
+| import_peak           | ip |
+| import_off_peak       | io |
+| import_shoulder       | is |
+| import_high_shoulder  | ih |
+| consumption           | c |
 
 As example
 
 ```ruby
 client.add_output(
   :output_date      => '20160228'
-  :power_generated  => 15000,
-  :temperature      => 30,
-  :voltage          => 200,
+  :energy_generated  => 15000,
+  :max_temp      => 30
+)
+```
+
+You can report also a batch of daily output values to PVOutput using
+
+```ruby
+pvoutput.add_batch_output(
+  options
+)
+```
+
+The add_batch_output operation accepts a hash with the date as key and within that the following options
+
+| Option                | PVOutput Parameter |
+| --------------------- | ------------------ |
+| energy_generated      | g |
+| peak_power            | pp |
+| peak_time             | pt |
+| condition             | cd |
+| min_temp              | tm |
+| max_temp              | tx |
+| comments              | cm |
+| import_peak           | ip |
+| import_off_peak       | io |
+| import_shoulder       | is |
+| import_high_shoulder  | ih |
+| consumption           | c |
+
+As example
+
+```ruby
+client.add_output(
+  :'20150101' => {
+    :energy_generated => 1239, },
+  :'20150102' => {
+    :energy_generated => 1523 },
+  :'20150103' => {
+    :energy_generated => 2190 },
 )
 ```
 
