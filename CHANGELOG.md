@@ -1,5 +1,10 @@
 # Changelog
 
+# 0.3.0 (20160229)
+
+* Add donation mode (@jwillemsen)
+* Add batch_output support (@jwillemsen)
+
 # 0.2.0 (20160227)
 
 * Fix typo in temperature (@jwillemsen)
