@@ -12,7 +12,7 @@ module PVOutput
       # The batch operations have default limit of 30 sets of data in one request, when you
       # are using the donation mode the limit is 100 sets
       @batch_size = 30
-      @batch_size = 100 if donation_mode == true
+      @batch_size = 100 if donation_mode
 
       self.class.headers 'X-Pvoutput-Apikey' => @api_key, 'X-Pvoutput-SystemId' => @system_id
     end
@@ -68,30 +68,25 @@ module PVOutput
 
     # rubocop:disable Metrics/AbcSize
     def add_batch_output(options)
-      params = {
-      }
-      data = ''
-      count = 0
+      keys = %i(energy_generated energy_export energy_used)
+      keys += %i(peak_power peak_time condition min_temp)
+      keys += %i(max_temp comments import_peak import_off_peak)
+      keys += %i(import_shoulder)
 
-      options.each do |date, values|
-        keys = %i(energy_generated energy_export energy_used)
-        keys += %i(peak_power peak_time condition min_temp)
-        keys += %i(max_temp comments import_peak import_off_peak)
-        keys += %i(import_shoulder)
+      options.to_a.each_slice(@batch_size) do |slice|
+        data = ''
+        slice.each do |entry|
+          date, values = entry
+          data += "#{date}," + keys.map { |key| values[key] }.join(',') + ';'
+        end
 
-        data += "#{date}," + keys.map { |key| values[key] }.join(',') + ';'
-
-        count += 1
-
-        next unless count.remainder(@batch_size) == 0 || count == options.size
-
-        params[:data] = data.chop
+        params = {
+          :data => data.chop,
+        }
 
         response = self.class.post('/service/r2/addbatchoutput.jsp', :body => params)
 
         raise('Bad Post') unless response.code == 200
-
-        data.clear
       end
     end
     # rubocop:enable Metrics/AbcSize
