@@ -20,7 +20,7 @@ describe PVOutput::Client do
       Timecop.return
     end
 
-    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable MethodLength
     it 'adds a status' do
       body = 'd=20150101&t=00%3A00&v1=100&v2=50&v5=30&v6=200'
       headers = {
@@ -38,9 +38,9 @@ describe PVOutput::Client do
 
       expect(st).to have_been_requested
     end
-    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable MethodLength
 
-    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable MethodLength
     it 'adds an output' do
       body = 'd=2015-01-01&g=100&pp=50&tx=45&cm=moo'
       headers = {
@@ -59,9 +59,9 @@ describe PVOutput::Client do
 
       expect(st).to have_been_requested
     end
-    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable MethodLength
 
-    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable MethodLength
     it 'adds a batch output output' do
       body = 'data=20150101%2C1239%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%3B20150102%2C1523%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C'
       headers = {
@@ -83,7 +83,7 @@ describe PVOutput::Client do
 
       expect(st).to have_been_requested
     end
-    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable MethodLength
   end
 end
 # rubocop:enable RSpec/FilePath
