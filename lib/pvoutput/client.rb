@@ -84,9 +84,19 @@ module PVOutput
           :data => data.chop,
         }
 
-        response = self.class.post('/service/r2/addbatchoutput.jsp', :body => params)
-
-        raise('Bad Post') unless response.code == 200
+        data_send = false
+        until data_send
+          response = self.class.post('/service/r2/addbatchoutput.jsp', :body => params)
+          if response.code == 400 && response.body =~ /Load in progress/
+            # We can't send data too fast, when the previous request is still loaded we
+            # have to wait so sleep 10 seconds and try again
+            sleep(10)
+          elsif response.code == 200
+            data_send = true
+          else
+            raise('Bad Post')
+          end
+        end
       end
     end
     # rubocop:enable Metrics/AbcSize
