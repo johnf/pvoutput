@@ -69,10 +69,10 @@ describe PVOutput::Client do
 
       client.add_batch_output(
         :'20150101' => {
-          :energy_generated => 1239
+          :energy_generated => 1239,
         },
         :'20150102' => {
-          :energy_generated => 1523
+          :energy_generated => 1523,
         }
       )
 
