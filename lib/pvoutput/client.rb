@@ -20,15 +20,15 @@ module PVOutput
     # Helper method to post batch request to pvout that retries at the moment we get
     # a 400 error back with body containing 'Load in progress'
     def post_request(path, options = {}, &block)
-      data_send = false
-      until data_send
+      loop do
         response = self.class.post(path, options, &block)
+
         if response.code == 400 && response.body =~ /Load in progress/
           # We can't send data too fast, when the previous request is still loaded we
           # have to wait so sleep 10 seconds and try again
           sleep(10)
         elsif response.code == 200
-          data_send = true
+          return
         else
           raise('Bad Post')
         end

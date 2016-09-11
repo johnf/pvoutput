@@ -11,6 +11,12 @@ describe PVOutput::Client do
     let(:system_id) { '1234' }
     let(:api_key) { 'secret' }
     let(:client) { described_class.new(system_id, api_key) }
+    let(:headers) do
+      {
+        'X-Pvoutput-Apikey'   => 'secret',
+        'X-Pvoutput-Systemid' => '1234',
+      }
+    end
 
     before do
       Timecop.freeze(Time.local(2015))
@@ -22,10 +28,6 @@ describe PVOutput::Client do
 
     it 'adds a status' do
       body = 'd=20150101&t=00%3A00&v1=100&v2=50&v5=30&v6=200'
-      headers = {
-        'X-Pvoutput-Apikey'   => 'secret',
-        'X-Pvoutput-Systemid' => '1234',
-      }
       st = stub_request(:post, 'http://pvoutput.org/service/r2/addstatus.jsp').with(:body => body, :headers => headers)
 
       client.add_status(
@@ -40,10 +42,6 @@ describe PVOutput::Client do
 
     it 'adds an output' do
       body = 'd=2015-01-01&g=100&pp=50&tx=45&cm=moo'
-      headers = {
-        'X-Pvoutput-Apikey'   => 'secret',
-        'X-Pvoutput-Systemid' => '1234',
-      }
       st = stub_request(:post, 'http://pvoutput.org/service/r2/addoutput.jsp').with(:body => body, :headers => headers)
 
       client.add_output(
@@ -59,10 +57,6 @@ describe PVOutput::Client do
 
     it 'adds a batch output output' do
       body = 'data=20150101%2C1239%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%3B20150102%2C1523%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C'
-      headers = {
-        'X-Pvoutput-Apikey'   => 'secret',
-        'X-Pvoutput-Systemid' => '1234',
-      }
       st = stub_request(:post, 'http://pvoutput.org/service/r2/addbatchoutput.jsp').with(
         :body => body, :headers => headers
       )
@@ -77,6 +71,24 @@ describe PVOutput::Client do
       )
 
       expect(st).to have_been_requested
+    end
+
+    it 'adds a batch output output with loading delay' do
+      body = 'data=20150101%2C1239%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%3B20150102%2C1523%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C'
+      st = stub_request(:post, 'http://pvoutput.org/service/r2/addbatchoutput.jsp').with(
+        :body => body, :headers => headers
+      ).to_return(:body => 'Load in progress', :status => 400).then.to_return(:status => 200)
+
+      client.add_batch_output(
+        :'20150101' => {
+          :energy_generated => 1239,
+        },
+        :'20150102' => {
+          :energy_generated => 1523,
+        }
+      )
+
+      expect(st).to have_been_requested.twice
     end
   end
 end
