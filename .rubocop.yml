@@ -18,6 +18,9 @@ Metrics/MethodLength:
 Metrics/LineLength:
   Max: 120
 
+RSpec/ExampleLength:
+  Max: 20
+
 Style/ModuleFunction:
   Enabled: false
 
