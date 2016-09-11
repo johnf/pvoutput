@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.4.0 (20160911)
+
+* Add retries to batch_output (@jwillemsen)
+
 # 0.3.0 (20160229)
 
 * Add donation mode (@jwillemsen)
