@@ -64,13 +64,16 @@ describe PVOutput::Client do
         'X-Pvoutput-Systemid' => '1234',
       }
       st = stub_request(:post, 'http://pvoutput.org/service/r2/addbatchoutput.jsp').with(
-        :body => body, :headers => headers)
+        :body => body, :headers => headers
+      )
 
       client.add_batch_output(
         :'20150101' => {
-          :energy_generated => 1239 },
+          :energy_generated => 1239,
+        },
         :'20150102' => {
-          :energy_generated => 1523 }
+          :energy_generated => 1523,
+        }
       )
 
       expect(st).to have_been_requested

@@ -17,6 +17,24 @@ module PVOutput
       self.class.headers 'X-Pvoutput-Apikey' => @api_key, 'X-Pvoutput-SystemId' => @system_id
     end
 
+    # Helper method to post batch request to pvout that retries at the moment we get
+    # a 400 error back with body containing 'Load in progress'
+    def post_request(path, options = {}, &block)
+      data_send = false
+      until data_send
+        response = self.class.post(path, options, &block)
+        if response.code == 400 && response.body =~ /Load in progress/
+          # We can't send data too fast, when the previous request is still loaded we
+          # have to wait so sleep 10 seconds and try again
+          sleep(10)
+        elsif response.code == 200
+          data_send = true
+        else
+          raise('Bad Post')
+        end
+      end
+    end
+
     # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     def add_status(options)
       time = options[:when] || Time.now
@@ -84,9 +102,7 @@ module PVOutput
           :data => data.chop,
         }
 
-        response = self.class.post('/service/r2/addbatchoutput.jsp', :body => params)
-
-        raise('Bad Post') unless response.code == 200
+        post_request('/service/r2/addbatchoutput.jsp', :body => params)
       end
     end
     # rubocop:enable Metrics/AbcSize
