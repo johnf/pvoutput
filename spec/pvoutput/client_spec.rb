@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 require 'webmock/rspec'
@@ -5,7 +7,7 @@ require 'timecop'
 
 require 'pvoutput/client'
 
-# rubocop:disable RSpec/FilePath
+# rubocop:disable Metrics/BlockLength,RSpec/FilePath
 describe PVOutput::Client do
   describe 'API' do
     let(:system_id) { '1234' }
@@ -92,4 +94,4 @@ describe PVOutput::Client do
     end
   end
 end
-# rubocop:enable RSpec/FilePath
+# rubocop:enable Metrics/BlockLength,RSpec/FilePath

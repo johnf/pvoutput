@@ -1,6 +1,9 @@
 require: rubocop-rspec
 
-HashSyntax:
+AllCops:
+  NewCops: enable
+
+Style/HashSyntax:
   EnforcedStyle: hash_rockets
 
 Style/Documentation:
@@ -9,13 +12,16 @@ Style/Documentation:
 Style/Lambda:
   Enabled: false
 
-Style/TrailingCommaInLiteral:
-  EnforcedStyleForMultiline: comma
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: consistent_comma
 
 Metrics/MethodLength:
   Max: 20
 
-Metrics/LineLength:
+Layout/LineLength:
   Max: 120
 
 RSpec/ExampleLength:
@@ -24,5 +30,8 @@ RSpec/ExampleLength:
 Style/ModuleFunction:
   Enabled: false
 
-AlignHash:
+Layout/HashAlignment:
   EnforcedHashRocketStyle: table
+
+Style/OptionalBooleanParameter:
+  Enabled: false

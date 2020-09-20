@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'httparty'
 
 module PVOutput
@@ -86,16 +88,16 @@ module PVOutput
 
     # rubocop:disable Metrics/AbcSize
     def add_batch_output(options)
-      keys = %i(energy_generated energy_export energy_used)
-      keys += %i(peak_power peak_time condition min_temp)
-      keys += %i(max_temp comments import_peak import_off_peak)
-      keys += %i(import_shoulder)
+      keys = %i[energy_generated energy_export energy_used]
+      keys += %i[peak_power peak_time condition min_temp]
+      keys += %i[max_temp comments import_peak import_off_peak]
+      keys += %i[import_shoulder]
 
       options.to_a.each_slice(@batch_size) do |slice|
         data = ''
         slice.each do |entry|
           date, values = entry
-          data += "#{date}," + keys.map { |key| values[key] }.join(',') + ';'
+          data += "#{date},#{keys.map { |key| values[key] }.join(',')};"
         end
 
         params = {
