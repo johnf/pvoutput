@@ -1,6 +1,6 @@
 # PVOutput
 
-[![Circle CI](https://circleci.com/gh/johnf/pvoutput.svg?style=svg)](https://circleci.com/gh/johnf/pvoutput)
+[![Actions Status](https://github.com/johnf/pvoutput/workflows/Test/badge.svg)](https://github.com/johnf/pvoutput/actions)
 [![Coverage Status](https://coveralls.io/repos/johnf/pvoutput/badge.svg?branch=master&service=github)](https://coveralls.io/github/johnf/pvoutput?branch=master)
 [![Gem Version](https://badge.fury.io/rb/pvoutput.svg)](http://badge.fury.io/rb/pvoutput)
 
