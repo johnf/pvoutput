@@ -1,5 +1,10 @@
 # Changelog
 
+# 0.5.0 (2020-09-20)
+
+* Add more detail to error messages (@jwillemsen)
+* Support debugging (@johnf)
+
 # 0.4.0 (20160911)
 
 * Add retries to batch_output (@jwillemsen)
