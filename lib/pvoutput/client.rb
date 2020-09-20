@@ -4,7 +4,7 @@ module PVOutput
   class Client
     include HTTParty
     base_uri 'pvoutput.org'
-    # debug_output $stdout
+    debug_output $stdout if ENV['PVOUTPUT_DEBUG']
 
     def initialize(system_id, api_key, donation_mode = false)
       @system_id = system_id.to_s
