@@ -151,7 +151,7 @@ client.add_output(
 
 ## Debugging
 
-You can able HTTParty debugging to see the requests by setting `PVOUTPUT_DEBUG=true`
+You can enable HTTParty debugging to see the requests by setting `PVOUTPUT_DEBUG=true`
 
 ## Development
 
