@@ -86,7 +86,6 @@ module PVOutput
     end
     # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
-    # rubocop:disable Metrics/AbcSize
     def add_batch_output(options)
       keys = %i[energy_generated energy_export energy_used]
       keys += %i[peak_power peak_time condition min_temp]
@@ -107,6 +106,5 @@ module PVOutput
         post_request('/service/r2/addbatchoutput.jsp', :body => params)
       end
     end
-    # rubocop:enable Metrics/AbcSize
   end
 end
