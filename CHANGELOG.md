@@ -1,5 +1,13 @@
 # Changelog
 
+# 0.6.0 (2021-02-06)
+
+This test has no code changes but tests the new release process.
+
+* Move tests from CircleCI to GitHub Actions (@johnf)
+* Keep an eye on dependencies with Dependabot (@jwillemsen)
+* Schedule regular tests against multiple rubys (@jwillemsen)
+
 # 0.5.0 (2020-09-20)
 
 * Add more detail to error messages (@jwillemsen)
