@@ -1,5 +1,10 @@
 # Changelog
 
+# 1.0.0 (2021-02-14)
+
+* Require a minimum of Ruby 2.5 (@jwillemsen)
+* Clean up ruby gem publish GitHub Action (@jwillemsen)
+
 # 0.6.0 (2021-02-06)
 
 This test has no code changes but tests the new release process.
