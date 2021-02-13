@@ -157,7 +157,20 @@ You can enable HTTParty debugging to see the requests by setting `PVOUTPUT_DEBUG
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake rspec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+To install this gem onto your local machine, run `bundle exec rake install`.
+
+## Release
+
+To release a new version:
+  * Create a branch for the release
+  * Update the version number in `version.rb`
+  * Update CHANGELOG.md
+  * git commit -pm 'Release 1.x.x'
+  * git tag v1.x.x
+  * git push
+  * git push --tags
+  * In GitHub add the Change Log section to the release and save it
+  * Check everything looks OK in GitHub Actions
 
 ## Contributing
 
