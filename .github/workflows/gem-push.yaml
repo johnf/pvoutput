@@ -11,10 +11,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Ruby 2.6
+    - name: Set up Ruby 2.7
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 2.6
+        ruby-version: 2.7
 
     - name: Install dependencies
       run: bundle install
@@ -22,4 +22,4 @@ jobs:
       run: |
         rake release
       env:
-        GEM_HOST_API_KEY: "${{secrets.RUBYGEMS_AUTH_TOKEN}}"
+        GEM_HOST_API_KEY: "${{secrets.GEM_HOST_API_KEY}}"
