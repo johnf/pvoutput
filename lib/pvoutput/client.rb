@@ -11,9 +11,10 @@ module PVOutput
     def initialize(system_id, api_key, donation_mode = false)
       @system_id = system_id.to_s
       @api_key = api_key.to_s
-      # The batch operations have default limit of 30 sets of data in one request, when you
+
+      # The batch operations have default limit of 1 sets of data in one request, when you
       # are using the donation mode the limit is 100 sets
-      @batch_size = 30
+      @batch_size = 1
       @batch_size = 100 if donation_mode
 
       self.class.headers 'X-Pvoutput-Apikey' => @api_key, 'X-Pvoutput-SystemId' => @system_id
@@ -103,7 +104,7 @@ module PVOutput
           :data => data.chop,
         }
 
-        post_request('/service/r2/addbatchoutput.jsp', :body => params)
+        post_request('/service/r2/addoutput.jsp', :body => params)
       end
     end
   end
