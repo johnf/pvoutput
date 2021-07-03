@@ -13,6 +13,7 @@ describe PVOutput::Client do
     let(:system_id) { '1234' }
     let(:api_key) { 'secret' }
     let(:client) { described_class.new(system_id, api_key) }
+    let(:donation_client) { described_class.new(system_id, api_key, true) }
     let(:headers) do
       {
         'X-Pvoutput-Apikey'   => 'secret',
@@ -57,13 +58,34 @@ describe PVOutput::Client do
       expect(st).to have_been_requested
     end
 
-    it 'adds a batch output output' do
-      body = 'data=20150101%2C1239%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%3B20150102%2C1523%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C'
-      st = stub_request(:post, 'http://pvoutput.org/service/r2/addbatchoutput.jsp').with(
-        :body => body, :headers => headers
+    it 'adds a batch output output without donation mode' do
+      st1 = stub_request(:post, 'http://pvoutput.org/service/r2/addoutput.jsp').with(
+        :body => 'data=20150101%2C1239%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C', :headers => headers
+      )
+      st2 = stub_request(:post, 'http://pvoutput.org/service/r2/addoutput.jsp').with(
+        :body => 'data=20150102%2C1523%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C', :headers => headers
       )
 
       client.add_batch_output(
+        :'20150101' => {
+          :energy_generated => 1239,
+        },
+        :'20150102' => {
+          :energy_generated => 1523,
+        }
+      )
+
+      expect(st1).to have_been_requested
+      expect(st2).to have_been_requested
+    end
+
+    it 'adds a batch output output with donation mode' do
+      body = 'data=20150101%2C1239%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%3B20150102%2C1523%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C'
+      st = stub_request(:post, 'http://pvoutput.org/service/r2/addoutput.jsp').with(
+        :body => body, :headers => headers
+      )
+
+      donation_client.add_batch_output(
         :'20150101' => {
           :energy_generated => 1239,
         },
@@ -77,11 +99,11 @@ describe PVOutput::Client do
 
     it 'adds a batch output output with loading delay' do
       body = 'data=20150101%2C1239%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%3B20150102%2C1523%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C'
-      st = stub_request(:post, 'http://pvoutput.org/service/r2/addbatchoutput.jsp').with(
+      st = stub_request(:post, 'http://pvoutput.org/service/r2/addoutput.jsp').with(
         :body => body, :headers => headers
       ).to_return(:body => 'Load in progress', :status => 400).then.to_return(:status => 200)
 
-      client.add_batch_output(
+      donation_client.add_batch_output(
         :'20150101' => {
           :energy_generated => 1239,
         },
