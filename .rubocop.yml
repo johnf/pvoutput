@@ -35,3 +35,6 @@ Layout/HashAlignment:
 
 Style/OptionalBooleanParameter:
   Enabled: false
+
+RSpec/MultipleExpectations:
+  Max: 2

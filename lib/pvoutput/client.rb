@@ -12,8 +12,8 @@ module PVOutput
       @system_id = system_id.to_s
       @api_key = api_key.to_s
 
-      # The add_batch_output operation has a default limit of 1 sets of data in one request, when you
-      # are using the donation mode the limit is 100 sets
+      # The add_batch_output operation has a default limit of 1 sets of data in one
+      # request, when you are using the donation mode the limit is 100 sets
       @batch_size = 1
       @batch_size = 100 if donation_mode
 
