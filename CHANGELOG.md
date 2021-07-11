@@ -1,5 +1,12 @@
 # Changelog
 
+# 1.1.0 (2021-07-12)
+
+* add_batch_output is now using addoutput with a batch size of 1 in regular mode and 100 in donation mode (@jwillemsen)
+* Clean up ruby gem publish GitHub Action (@jwillemsen)
+
+# Changelog
+
 # 1.0.0 (2021-02-14)
 
 * Require a minimum of Ruby 2.5 (@jwillemsen)
