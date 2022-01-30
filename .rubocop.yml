@@ -38,3 +38,6 @@ Style/OptionalBooleanParameter:
 
 RSpec/MultipleExpectations:
   Max: 2
+
+Gemspec/RequireMFA:
+  Enabled: false
