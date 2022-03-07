@@ -5,7 +5,7 @@ require 'spec_helper'
 # rubocop:disable RSpec/FilePath
 describe PVOutput do
   it 'has a version number' do
-    expect(PVOutput::VERSION).not_to be nil
+    expect(PVOutput::VERSION).not_to be_nil
   end
 end
 # rubocop:enable RSpec/FilePath
