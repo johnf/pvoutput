@@ -41,3 +41,6 @@ RSpec/MultipleExpectations:
 
 Gemspec/RequireMFA:
   Enabled: false
+
+Gemspec/RequiredRubyVersion:
+  Enabled: false
