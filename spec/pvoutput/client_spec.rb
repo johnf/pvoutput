@@ -104,4 +104,4 @@ describe PVOutput::Client do
     end
   end
 end
-# rubocop:enable Metrics/BlockLength,RSpec/FilePath
+# rubocop:enable RSpec/FilePath
