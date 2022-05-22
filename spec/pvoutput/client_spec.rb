@@ -7,7 +7,7 @@ require 'timecop'
 
 require 'pvoutput/client'
 
-# rubocop:disable Metrics/BlockLength,RSpec/FilePath
+# rubocop:disable RSpec/FilePath
 describe PVOutput::Client do
   describe 'API' do
     let(:system_id) { '1234' }
