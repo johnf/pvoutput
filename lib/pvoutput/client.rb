@@ -64,8 +64,7 @@ module PVOutput
 
     # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     def add_output(options)
-      params = {
-      }
+      params = {}
 
       params[:d] = options[:output_date]
       params[:g] = options[:energy_generated] if options[:energy_generated]
